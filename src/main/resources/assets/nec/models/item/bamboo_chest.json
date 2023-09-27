@@ -1,0 +1,6 @@
+{
+   "parent": "nec:item/chest_base",
+   "textures": {
+        "wood_type": "nec:entity/chest/bamboo"
+    }
+}

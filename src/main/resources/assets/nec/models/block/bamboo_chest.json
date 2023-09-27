@@ -1,0 +1,7 @@
+{
+   "parent": "minecraft:block/chest",
+   "textures": {
+        "particle": "nec:entity/chest/bamboo",
+        "particle": "nec:entity/chest/bamboo"
+    }
+}
