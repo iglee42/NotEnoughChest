@@ -11,6 +11,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Calendar;
 
+import static fr.iglee42.notenoughchest.NotEnoughChest.MODID;
+
 @OnlyIn(Dist.CLIENT)
 public class CustomChestRenderer extends ChestRenderer<CustomChestBlockEntity> {
     public static Material[] single;
@@ -52,7 +54,7 @@ public class CustomChestRenderer extends ChestRenderer<CustomChestBlockEntity> {
     }
 
     private static Material getChestMaterial(String path) {
-        return new Material(Sheets.CHEST_SHEET, new ResourceLocation("entity/chest/" + path));
+        return new Material(Sheets.CHEST_SHEET, new ResourceLocation(MODID,"entity/chest/" + path));
     }
 
     private Material getChestMaterial(CustomChestBlockEntity tile, ChestType type) {

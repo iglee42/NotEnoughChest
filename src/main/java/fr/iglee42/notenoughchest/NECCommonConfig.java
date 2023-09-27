@@ -18,7 +18,7 @@ public class NECCommonConfig {
 
     private static File configFile;
 
-    public static List<String> modsBlacklist = Arrays.asList("chipped");
+    public static List<String> modsBlacklist = Arrays.asList("chipped","ars_nouveau");
 
 
 

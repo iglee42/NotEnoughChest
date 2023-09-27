@@ -81,6 +81,7 @@ public class PathConstant {
         FORGE_BLOCK_TAGS_PATH.toFile().mkdirs();
         FORGE_ITEM_TAGS_PATH.toFile().mkdirs();
         FORGE_BLOCK_TAGS_PATH.resolve("chests").toFile().mkdirs();
+        FORGE_ITEM_TAGS_PATH.resolve("chests").toFile().mkdirs();
 
 
 

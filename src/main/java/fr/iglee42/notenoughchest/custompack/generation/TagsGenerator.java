@@ -36,6 +36,7 @@ public class TagsGenerator {
             writeChestTag(tag,new File(PathConstant.FORGE_BLOCK_TAGS_PATH.toFile(), "chests.json"));
             writeChestTag(tag,new File(PathConstant.FORGE_BLOCK_TAGS_PATH.toFile()+"/chests", "wooden.json"));
             writeChestTag(tag,new File(PathConstant.FORGE_ITEM_TAGS_PATH.toFile(), "chests.json"));
+            writeChestTag(tag,new File(PathConstant.FORGE_ITEM_TAGS_PATH.toFile()+"/chests", "wooden.json"));
             writeChestTag(tag,new File(PathConstant.MC_MINEABLE_TAGS_PATH.toFile(), "axe.json"));
 
         } catch (Exception exception){
