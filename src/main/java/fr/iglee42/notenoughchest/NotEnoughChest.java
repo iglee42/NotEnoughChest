@@ -1,7 +1,8 @@
 package fr.iglee42.notenoughchest;
 
-import com.google.common.collect.Lists;
 import com.mojang.logging.LogUtils;
+import fr.iglee42.notenoughchest.chest.CustomChestBlock;
+import fr.iglee42.notenoughchest.chest.CustomChestBlockEntity;
 import fr.iglee42.notenoughchest.custompack.NECPackFinder;
 import fr.iglee42.notenoughchest.custompack.PackType;
 import fr.iglee42.notenoughchest.custompack.PathConstant;
@@ -10,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackRepository;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -27,23 +27,22 @@ import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoader;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.registries.*;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.stream.Collectors;
 
 @Mod(NotEnoughChest.MODID)
 public class NotEnoughChest {
@@ -93,6 +92,19 @@ public class NotEnoughChest {
             });
         });
 
+        if (ModList.get().isLoaded("integrateddynamics")) {
+            String woodType = "menril";
+            PLANK_TYPES.add(woodType);
+            WOOD_TYPES.add(new ResourceLocation("integrateddynamics",woodType));
+            RegistryObject<Block> chest = BLOCKS.register(woodType.toLowerCase() + "_chest", ()-> new CustomChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(), CHEST::get,PLANK_TYPES.indexOf(woodType)));
+            ITEMS.register(woodType.toLowerCase() +"_chest",()->new BlockItem(chest.get(),new Item.Properties()){
+                @Override
+                public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
+                    return 300;
+                }
+            });
+        }
+
         try {
             NECCommonConfig.load();
         } catch (IOException e) {
@@ -113,6 +125,7 @@ public class NotEnoughChest {
         modEventBus.addListener(this::addCreative);
 
         MinecraftForge.EVENT_BUS.register(this);
+
 
         try {
             if (FMLEnvironment.dist == Dist.CLIENT) {
@@ -153,10 +166,9 @@ public class NotEnoughChest {
 
 
 
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
-        if (event.getTabKey() == TAB.getKey()){
-            ForgeRegistries.ITEMS.getKeys().stream().filter(rs-> rs.getNamespace().equals(MODID)).forEach(rs->
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == TAB.getKey()) {
+            ForgeRegistries.ITEMS.getKeys().stream().filter(rs -> rs.getNamespace().equals(MODID)).forEach(rs ->
                     event.accept(ForgeRegistries.ITEMS.getValue(rs)));
         }
     }

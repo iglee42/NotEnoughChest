@@ -1,5 +1,6 @@
 package fr.iglee42.notenoughchest.custompack.generation;
 
+import fr.iglee42.igleelib.api.utils.ModsUtils;
 import fr.iglee42.notenoughchest.NotEnoughChest;
 import fr.iglee42.notenoughchest.custompack.PathConstant;
 
@@ -20,7 +21,7 @@ public class LangsGenerator {
         NotEnoughChest.WOOD_TYPES.forEach(wt->{
             if (!wt.getNamespace().equals("minecraft")) {
                 String t = wt.getPath();
-                langs.put("block."+MODID+"."+t+"_chest",getUpperName(t+"_chest","_"));
+                langs.put("block."+MODID+"."+t+"_chest", ModsUtils.getUpperName(t+"_chest","_"));
             }
         });
 
@@ -44,31 +45,4 @@ public class LangsGenerator {
         }
     }
 
-    private static String[] split(String base,String separator){
-        String[] st = base.split(separator);
-        String[] finale = new String[st.length];
-        int i = 0;
-        for (String s : st){
-            String fi = s;
-            if (s.endsWith(separator))fi = s.substring(s.length()-1);
-            finale[i] = fi;
-            i += 1;
-        }
-        return finale;
-    }
-
-    private static String getUpperName(String name,String wordSeparator) {
-        String[] nm = split(name,wordSeparator);
-        StringBuilder end = new StringBuilder();
-        int i = 0;
-        for (String n : nm) {
-            i += 1;
-            char fc = n.charAt(0);
-            String fcs = String.valueOf(fc);
-            String fs = fcs.toUpperCase() + n.substring(1);
-            end.append(fs).append(i == nm.length ? "" : " ");
-        }
-
-        return end.toString();
-    }
 }

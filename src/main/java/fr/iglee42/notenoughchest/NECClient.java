@@ -1,5 +1,6 @@
 package fr.iglee42.notenoughchest;
 
+import fr.iglee42.notenoughchest.chest.CustomChestRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
