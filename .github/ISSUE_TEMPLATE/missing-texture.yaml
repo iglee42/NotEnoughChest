@@ -1,0 +1,47 @@
+name: Texture
+description: There is a missing texture
+labels: ["texture", "enhancement"]
+assignees:
+  - iglee42
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: dropdown
+    id: plugin
+    attributes:
+      label: Plugin
+      description: Which plugin are we talking about?
+      options:
+        - Animations
+        - TrustList
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Plugin version
+      description: What version of the plugin do you use?
+      placeholder: 1.0.0 or something
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What is broken?
+      description: Also tell me about the errors in the developer's console.
+      placeholder: Answer here.
+    validations:
+      required: true
+  - type: dropdown
+    id: discord-client
+    attributes:
+      label: Client
+      description: What Discord client do you use?
+      options:
+        - Stable
+        - PTB
+        - Canary
+    validations:
+      required: false
