@@ -7,9 +7,11 @@ title: "[Texture]"
 body:
   - type: markdown
     attributes:
-      value: |
-             "> [!WARNING] "
-             "> Please make sure the texture is not present in the code"
+      value: "> [!WARNING] "
+  - type: markdown
+    attributes:
+      value: | 
+        "> Please make sure the texture is not present in the code"
   - type: input
     id: mod
     attributes:
