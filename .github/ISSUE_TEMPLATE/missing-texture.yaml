@@ -11,7 +11,7 @@ body:
   - type: markdown
     attributes:
       value: | 
-        "> Please make sure the texture is not present in the code"
+        > Please make sure the texture is not present in the code
   - type: input
     id: mod
     attributes:
