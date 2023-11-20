@@ -6,42 +6,28 @@ assignees:
 body:
   - type: markdown
     attributes:
-      value: |
-        Thanks for taking the time to fill out this bug report!
-  - type: dropdown
-    id: plugin
+      value: ">[!WARNING] Please make sure the texture is not present in the code"
+  - type: input
+    id: mod
     attributes:
-      label: Plugin
-      description: Which plugin are we talking about?
-      options:
-        - Animations
-        - TrustList
+      label: Mod
+      description: The Mod where does the type of wood come from
+      placeholder: E.g. Biomes O Plenty
     validations:
       required: true
   - type: input
-    id: version
+    id: mod-link
     attributes:
-      label: Plugin version
-      description: What version of the plugin do you use?
-      placeholder: 1.0.0 or something
+      label: Mod Link
+      description: The link of the mod
+      placeholder: E.g. https://www.curseforge.com/minecraft/mc-mods/biomes-o-plenty/
     validations:
       required: true
-  - type: textarea
-    id: what-happened
+  - type: input
+    id: wood-type
     attributes:
-      label: What is broken?
-      description: Also tell me about the errors in the developer's console.
-      placeholder: Answer here.
+      label: Wood Type
+      description: The type of wood
+      placeholder: E.g. Palm
     validations:
       required: true
-  - type: dropdown
-    id: discord-client
-    attributes:
-      label: Client
-      description: What Discord client do you use?
-      options:
-        - Stable
-        - PTB
-        - Canary
-    validations:
-      required: false
