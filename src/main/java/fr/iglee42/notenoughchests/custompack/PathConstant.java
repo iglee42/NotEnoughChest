@@ -17,6 +17,7 @@ public class PathConstant {
 
     public static Path LANGS_PATH;
     public static Path RECIPES_PATH;
+    public static Path LOOT_TABLES_PATH;
 
     public static Path BLOCK_STATES_PATH;
     public static Path MODELS_PATH;
@@ -51,6 +52,7 @@ public class PathConstant {
         MODELS_PATH = ASSETS_PATH.resolve("models");
 
         RECIPES_PATH = DATAS_PATH.resolve("recipes");
+        LOOT_TABLES_PATH = DATAS_PATH.resolve("loot_tables/blocks");
 
         ITEM_MODELS_PATH = MODELS_PATH.resolve("item");
         BLOCK_MODELS_PATH = MODELS_PATH.resolve("block");
@@ -71,6 +73,7 @@ public class PathConstant {
         ITEM_MODELS_PATH.toFile().mkdirs();
         BLOCK_MODELS_PATH.toFile().mkdirs();
         RECIPES_PATH.toFile().mkdirs();
+        LOOT_TABLES_PATH.toFile().mkdirs();
 
         MC_TAGS_PATH.toFile().mkdirs();
         MC_BLOCK_TAGS_PATH.toFile().mkdirs();
