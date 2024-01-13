@@ -1,0 +1,34 @@
+name: Texture
+description: There is a missing texture
+labels: ["texture", "enhancement"]
+assignees:
+  - iglee42
+title: "[Texture]"
+body:
+  - type: markdown
+    attributes:
+      value: "⚠️ Please make sure the texture is not present in the code"
+  - type: input
+    id: mod
+    attributes:
+      label: Mod
+      description: The Mod where does the type of wood come from
+      placeholder: E.g. Biomes O Plenty
+    validations:
+      required: true
+  - type: input
+    id: mod-link
+    attributes:
+      label: Mod Link
+      description: The link of the mod
+      placeholder: E.g. https://www.curseforge.com/minecraft/mc-mods/biomes-o-plenty/
+    validations:
+      required: true
+  - type: input
+    id: wood-type
+    attributes:
+      label: Wood Type
+      description: The type of wood
+      placeholder: E.g. Palm
+    validations:
+      required: true
