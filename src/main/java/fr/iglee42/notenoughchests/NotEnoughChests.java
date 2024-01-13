@@ -10,9 +10,7 @@ import fr.iglee42.notenoughchests.custompack.generation.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.repository.PackRepository;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -51,6 +49,12 @@ public class NotEnoughChests {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
 
+    public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(Items.CHEST);
+        }
+    };
     public static final RegistryObject<BlockEntityType<CustomChestBlockEntity>> CHEST = BLOCK_ENTITIES.register("chest", ()->BlockEntityType.Builder.of(CustomChestBlockEntity::new).build(null));
 
 
@@ -74,7 +78,7 @@ public class NotEnoughChests {
             PLANK_TYPES.add(woodType);
             WOOD_TYPES.add(new ResourceLocation(rs.getPath().replace("_planks","").toLowerCase()));
             RegistryObject<Block> chest = BLOCKS.register(woodType.toLowerCase() + "_chest", ()-> new CustomChestBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD), CHEST::get,PLANK_TYPES.indexOf(woodType)));
-            ITEMS.register(woodType.toLowerCase() +"_chest",()->new BlockItem(chest.get(),new Item.Properties()){
+            ITEMS.register(woodType.toLowerCase() +"_chest",()->new BlockItem(chest.get(),new Item.Properties().tab(TAB)){
                 @Override
                 public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
                     return 300;
@@ -87,7 +91,7 @@ public class NotEnoughChests {
             PLANK_TYPES.add(woodType);
             WOOD_TYPES.add(new ResourceLocation("integrateddynamics",woodType));
             RegistryObject<Block> chest = BLOCKS.register(woodType.toLowerCase() + "_chest", ()-> new CustomChestBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD), CHEST::get,PLANK_TYPES.indexOf(woodType)));
-            ITEMS.register(woodType.toLowerCase() +"_chest",()->new BlockItem(chest.get(),new Item.Properties()){
+            ITEMS.register(woodType.toLowerCase() +"_chest",()->new BlockItem(chest.get(),new Item.Properties().tab(TAB)){
                 @Override
                 public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
                     return 300;
@@ -139,7 +143,7 @@ public class NotEnoughChests {
         } else if (registryName.getPath().equals("item")) {
             if (id.getPath().endsWith("_planks")  || id.getPath().startsWith("plank_")) {
                 String woodType = id.getPath().replace("_planks", "").replace("plank_","");
-                event.register(ForgeRegistries.Keys.ITEMS, new ResourceLocation(MODID, woodType + "_chest"), () -> new BlockItem(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MODID,woodType + "_chest")),new Item.Properties()){
+                event.register(ForgeRegistries.Keys.ITEMS, new ResourceLocation(MODID, woodType + "_chest"), () -> new BlockItem(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MODID,woodType + "_chest")),new Item.Properties().tab(TAB)){
                     @Override
                     public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
                         return 300;
