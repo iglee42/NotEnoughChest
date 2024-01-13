@@ -168,19 +168,20 @@ dependencies {
 
 
     //implementation fg.deobf("curse.maven:biomes-o-plenty-220318:4764804")
-    implementation fg.deobf("curse.maven:terrablender-563928:4764561")
+    //implementation fg.deobf("curse.maven:terrablender-563928:4764561")
 
-    implementation fg.deobf("curse.maven:regions-unexplored-659110:4779426")
+    //implementation fg.deobf("curse.maven:regions-unexplored-659110:4779426")
 
-    implementation fg.deobf("curse.maven:integrated-dynamics-236307:4791813")
-    implementation fg.deobf("curse.maven:common-capabilities-247007:4620480")
-    implementation fg.deobf("curse.maven:cyclops-core-232758:4808715")
+    //implementation fg.deobf("curse.maven:integrated-dynamics-236307:4791813")
+    //implementation fg.deobf("curse.maven:common-capabilities-247007:4620480")
+    //implementation fg.deobf("curse.maven:cyclops-core-232758:4808715")
 
     //implementation fg.deobf("curse.maven:chipped-456956:4634856")
     //implementation fg.deobf("curse.maven:resourceful-lib-570073:4741196")
     //implementation fg.deobf("curse.maven:athena-841890:4718179")
 
     implementation fg.deobf("curse.maven:jei-238222:4712868")
+
 
     implementation fg.deobf("fr.iglee42.igleelib:IgleeLib:${minecraft_version}-${lib_version}")
 
