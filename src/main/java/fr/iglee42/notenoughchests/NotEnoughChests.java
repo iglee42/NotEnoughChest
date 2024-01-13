@@ -201,13 +201,15 @@ public class NotEnoughChests {
             LangsGenerator.generate();
             RecipesGenerator.generate();
             TagsGenerator.generate();
+            LootTablesGenerator.generate();
+
             hasGenerated = true;
         }
     }
 
     public static void injectDatapackFinder(PackRepository resourcePacks) {
         if (DistExecutor.unsafeRunForDist(() -> () -> resourcePacks != Minecraft.getInstance().getResourcePackRepository(), () -> () -> true)) {
-            resourcePacks.addPackFinder(new NECPackFinder(PackType.RESOURCE));
+            resourcePacks.addPackFinder(new NECPackFinder(PackType.DATA));
         }
     }
 
