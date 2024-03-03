@@ -2,6 +2,7 @@ package fr.iglee42.notenoughchests.custompack.generation;
 
 import fr.iglee42.notenoughchests.NotEnoughChests;
 import fr.iglee42.notenoughchests.custompack.PathConstant;
+import fr.iglee42.notenoughchests.utils.ModAbbreviation;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,7 +18,7 @@ public class LootTablesGenerator {
 
     private static void chest(String modid,String name){
         try {
-            FileWriter writer = new FileWriter(new File(PathConstant.LOOT_TABLES_PATH.toFile(), name+"_chest.json"));
+            FileWriter writer = new FileWriter(new File(PathConstant.LOOT_TABLES_PATH.toFile(), ModAbbreviation.getModAbbrevation(modid) + name+"_chest.json"));
             writer.write("{\n" +
                     "  \"type\": \"minecraft:block\",\n" +
                     "  \"pools\": [\n" +
@@ -31,13 +32,13 @@ public class LootTablesGenerator {
                     "      \"entries\": [\n" +
                     "        {\n" +
                     "          \"type\": \"minecraft:item\",\n" +
-                    "          \"name\": \"nec:"+name+"_chest\"\n" +
+                    "          \"name\": \"nec:"+ModAbbreviation.getModAbbrevation(modid) +name+"_chest\"\n" +
                     "        }\n" +
                     "      ],\n" +
                     "      \"rolls\": 1.0\n" +
                     "    }\n" +
                     "  ],\n" +
-                    "  \"random_sequence\": \"nec:"+name+"_chest\"\n" +
+                    "  \"random_sequence\": \"nec:"+ModAbbreviation.getModAbbrevation(modid) +name+"_chest\"\n" +
                     "}");
             writer.close();
         } catch (Exception exception){

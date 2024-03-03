@@ -13,6 +13,9 @@ public class ModAbbreviation {
         abbrevations.put("biomesoplenty","bop");
         abbrevations.put("biomeyoullgo","byg");
         abbrevations.put("regions_unexplored","rgun");
+        abbrevations.put("caveopolis","caveop");
+        abbrevations.put("pokecube","pokecube");
+        abbrevations.put("pokecube_legends","pokecube");
     }
 
     public static String getChestTexture(ResourceLocation plankType){
@@ -22,6 +25,10 @@ public class ModAbbreviation {
         } else {
             return abbrevModid+"/"+plankType.getPath();
         }
+    }
+
+    public static String getModAbbrevation(String modid){
+        return abbrevations.containsKey(modid) ? abbrevations.get(modid)+"_":"";
     }
 
 

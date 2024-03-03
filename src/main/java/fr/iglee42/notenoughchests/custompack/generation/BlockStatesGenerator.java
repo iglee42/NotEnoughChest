@@ -2,6 +2,7 @@ package fr.iglee42.notenoughchests.custompack.generation;
 
 import fr.iglee42.notenoughchests.NotEnoughChests;
 import fr.iglee42.notenoughchests.custompack.PathConstant;
+import fr.iglee42.notenoughchests.utils.ModAbbreviation;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -13,7 +14,7 @@ public class BlockStatesGenerator {
         NotEnoughChests.WOOD_TYPES.forEach(wt->{
             if (!wt.getNamespace().equals("minecraft")) {
                 String t = wt.getPath();
-                blockState(t+"_chest");
+                blockState(ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_chest");
             }
         });
     }

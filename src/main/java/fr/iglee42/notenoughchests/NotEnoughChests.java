@@ -7,6 +7,7 @@ import fr.iglee42.notenoughchests.custompack.NECPackFinder;
 import fr.iglee42.notenoughchests.custompack.PackType;
 import fr.iglee42.notenoughchests.custompack.PathConstant;
 import fr.iglee42.notenoughchests.custompack.generation.*;
+import fr.iglee42.notenoughchests.utils.ModAbbreviation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -42,7 +43,9 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mod(NotEnoughChests.MODID)
 public class NotEnoughChests {
@@ -66,6 +69,7 @@ public class NotEnoughChests {
 
     public static List<ResourceLocation> WOOD_TYPES;
     public static List<String> PLANK_TYPES;
+    public static Map<ResourceLocation,String> PLANK_NAME_FORMAT;
 
 
     private static boolean hasGenerated;
@@ -78,11 +82,13 @@ public class NotEnoughChests {
 
         WOOD_TYPES = new ArrayList<>();
         PLANK_TYPES = new ArrayList<>();
+        PLANK_NAME_FORMAT = new HashMap<>();
 
         ForgeRegistries.BLOCKS.getKeys().stream().filter(rs->rs.getPath().endsWith("_planks")).forEach(rs->{
             String woodType = rs.getPath().replace("_planks","");
             PLANK_TYPES.add(woodType);
             WOOD_TYPES.add(new ResourceLocation(rs.getPath().replace("_planks","").toLowerCase()));
+            PLANK_NAME_FORMAT.put(new ResourceLocation(rs.getPath().replace("_planks","").toLowerCase()),"_planks");
             RegistryObject<Block> chest = BLOCKS.register(woodType.toLowerCase() + "_chest", ()-> new CustomChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(), CHEST::get,PLANK_TYPES.indexOf(woodType)));
             ITEMS.register(woodType.toLowerCase() +"_chest",()->new BlockItem(chest.get(),new Item.Properties()){
                 @Override
@@ -96,6 +102,7 @@ public class NotEnoughChests {
             String woodType = "menril";
             PLANK_TYPES.add(woodType);
             WOOD_TYPES.add(new ResourceLocation("integrateddynamics",woodType));
+            PLANK_NAME_FORMAT.put(new ResourceLocation("integrateddynamics",woodType),"_planks");
             RegistryObject<Block> chest = BLOCKS.register(woodType.toLowerCase() + "_chest", ()-> new CustomChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(), CHEST::get,PLANK_TYPES.indexOf(woodType)));
             ITEMS.register(woodType.toLowerCase() +"_chest",()->new BlockItem(chest.get(),new Item.Properties()){
                 @Override
@@ -146,12 +153,13 @@ public class NotEnoughChests {
                 String woodType = id.getPath().replace("_planks", "").replace("plank_","");
                 WOOD_TYPES.add(new ResourceLocation(id.getNamespace(), woodType.toLowerCase()));
                 PLANK_TYPES.add(woodType);
-                event.register(ForgeRegistries.Keys.BLOCKS, new ResourceLocation(MODID, woodType + "_chest"), () -> new CustomChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(), CHEST::get, PLANK_TYPES.indexOf(woodType)));
+                PLANK_NAME_FORMAT.put(new ResourceLocation(id.getNamespace(), woodType.toLowerCase()),id.getPath().endsWith("_planks")?"_planks":(id.getPath().startsWith("plank_")?"plank_":""));
+                event.register(ForgeRegistries.Keys.BLOCKS, new ResourceLocation(MODID, ModAbbreviation.getModAbbrevation(id.getNamespace()) + woodType + "_chest"), () -> new CustomChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(), CHEST::get, PLANK_TYPES.indexOf(woodType)));
             }
         } else if (registryName.getPath().equals("item")) {
             if (id.getPath().endsWith("_planks")  || id.getPath().startsWith("plank_")) {
                 String woodType = id.getPath().replace("_planks", "").replace("plank_","");
-                event.register(ForgeRegistries.Keys.ITEMS, new ResourceLocation(MODID, woodType + "_chest"), () -> new BlockItem(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MODID,woodType + "_chest")),new Item.Properties()){
+                event.register(ForgeRegistries.Keys.ITEMS, new ResourceLocation(MODID, ModAbbreviation.getModAbbrevation(id.getNamespace()) + woodType + "_chest"), () -> new BlockItem(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MODID,ModAbbreviation.getModAbbrevation(id.getNamespace())+woodType + "_chest")),new Item.Properties()){
                     @Override
                     public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
                         return 300;

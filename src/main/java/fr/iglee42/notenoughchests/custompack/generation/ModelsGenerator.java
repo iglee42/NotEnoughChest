@@ -15,8 +15,8 @@ public class ModelsGenerator {
         NotEnoughChests.WOOD_TYPES.forEach(wt->{
             if (!wt.getNamespace().equals("minecraft")) {
                 String t = wt.getPath();
-                itemFromParent(t + "_chest", MODID + ":item/chest_base", new TextureKey("wood_type", MODID + ":entity/chest/" + ModAbbreviation.getChestTexture(wt)));
-                blockFromParent(t + "_chest", "minecraft:block/chest", new TextureKey("particle", MODID + ":entity/chest/" + ModAbbreviation.getChestTexture(wt)));
+                itemFromParent(ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t + "_chest", MODID + ":item/chest_base", new TextureKey("wood_type", MODID + ":entity/chest/" + ModAbbreviation.getChestTexture(wt)));
+                blockFromParent(ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t + "_chest", "minecraft:block/chest", new TextureKey("particle", MODID + ":entity/chest/" + ModAbbreviation.getChestTexture(wt)));
             }
         });
     }

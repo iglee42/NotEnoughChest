@@ -3,6 +3,7 @@ package fr.iglee42.notenoughchests.custompack.generation;
 import fr.iglee42.igleelib.api.utils.ModsUtils;
 import fr.iglee42.notenoughchests.NotEnoughChests;
 import fr.iglee42.notenoughchests.custompack.PathConstant;
+import fr.iglee42.notenoughchests.utils.ModAbbreviation;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -21,7 +22,7 @@ public class LangsGenerator {
         NotEnoughChests.WOOD_TYPES.forEach(wt->{
             if (!wt.getNamespace().equals("minecraft")) {
                 String t = wt.getPath();
-                langs.put("block."+MODID+"."+t+"_chest", ModsUtils.getUpperName(t+"_chest","_"));
+                langs.put("block."+MODID+"."+ ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_chest", ModsUtils.getUpperName(t+"_chest","_"));
             }
         });
 
