@@ -1,5 +1,6 @@
 package fr.iglee42.notenoughchests.chest;
 
+import fr.iglee42.notenoughchests.NotEnoughChests;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -15,6 +16,7 @@ public class CustomChestBlock extends ChestBlock {
     public CustomChestBlock(Properties p_51490_, Supplier<BlockEntityType<? extends ChestBlockEntity>> p_51491_, int chestTypeIndex) {
         super(p_51490_, p_51491_);
         this.chestTypeIndex = chestTypeIndex;
+        if (chestTypeIndex > 7) setRegistryName(NotEnoughChests.PLANK_TYPES.get(chestTypeIndex)+"_chest");
     }
 
     @Override

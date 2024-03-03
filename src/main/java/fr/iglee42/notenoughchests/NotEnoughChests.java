@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -31,7 +32,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -47,7 +47,7 @@ public class NotEnoughChests {
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MODID);
 
     public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
         @Override
@@ -131,25 +131,27 @@ public class NotEnoughChests {
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
 
-    public static void onRegistryObjectCreated(ResourceLocation registryName,ResourceLocation id,RegisterEvent event){
+    public static void onRegistryObjectCreated(ResourceLocation registryName, ResourceLocation id, RegistryEvent.Register<?> event){
         if (NECCommonConfig.modsBlacklist.contains(id.getNamespace())) return;
         if (registryName.getPath().equals("block")) {
             if (id.getPath().endsWith("_planks") || id.getPath().startsWith("plank_")) {
                 String woodType = id.getPath().replace("_planks", "").replace("plank_","");
                 WOOD_TYPES.add(new ResourceLocation(id.getNamespace(), woodType.toLowerCase()));
                 PLANK_TYPES.add(woodType);
-                event.register(ForgeRegistries.Keys.BLOCKS, new ResourceLocation(MODID, woodType + "_chest"), () -> new CustomChestBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD), CHEST::get, PLANK_TYPES.indexOf(woodType)));
+               // RegistryObject<Block> block = BLOCKS.register(woodType + "_chest",() -> new CustomChestBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD), CHEST::get, PLANK_TYPES.indexOf(woodType)));
+                ((RegistryEvent.Register<Block>)event).getRegistry().register(new CustomChestBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD), CHEST::get, PLANK_TYPES.indexOf(woodType)));
             }
         } else if (registryName.getPath().equals("item")) {
-            if (id.getPath().endsWith("_planks")  || id.getPath().startsWith("plank_")) {
+            /*if (id.getPath().endsWith("_planks")  || id.getPath().startsWith("plank_")) {
                 String woodType = id.getPath().replace("_planks", "").replace("plank_","");
-                event.register(ForgeRegistries.Keys.ITEMS, new ResourceLocation(MODID, woodType + "_chest"), () -> new BlockItem(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MODID,woodType + "_chest")),new Item.Properties().tab(TAB)){
+                RegistryObject<Item> item = ITEMS.register(woodType+"_chest", () -> new BlockItem(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MODID,woodType + "_chest")),new Item.Properties().tab(TAB)){
                     @Override
                     public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
                         return 300;
                     }
                 });
-            }
+                ((RegistryEvent.Register<Item>)event).getRegistry().register(item.get());
+            }*/
         }
 
     }

@@ -49,13 +49,13 @@ public class InMemoryPack implements PackResources {
 
 
     @Override
-    public Collection<ResourceLocation> getResources(PackType type, String namespaceIn, String pathIn, Predicate<ResourceLocation> filterIn) {
+    public Collection<ResourceLocation> getResources(PackType type, String namespaceIn, String pathIn, int in, Predicate<String> filterIn) {
         List<ResourceLocation> result = new ArrayList<>();
         getChildResourceLocations(result, 0, 500, filterIn, path.resolve(type.getDirectory() + "/" + namespaceIn + "/" + pathIn), namespaceIn, pathIn);
         return result;
     }
 
-    private void getChildResourceLocations(List<ResourceLocation> result, int depth, int maxDepth, Predicate<ResourceLocation> filter, Path current, String currentRLNS, String currentRLPath) {
+    private void getChildResourceLocations(List<ResourceLocation> result, int depth, int maxDepth, Predicate<String> filter, Path current, String currentRLNS, String currentRLPath) {
         if (depth >= maxDepth) {
             return;
         }

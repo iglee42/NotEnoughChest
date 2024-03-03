@@ -3,9 +3,9 @@ package fr.iglee42.notenoughchests.datagen;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 import static fr.iglee42.notenoughchests.NotEnoughChests.MODID;
 
@@ -17,10 +17,10 @@ public class DataGeneration {
         DataGenerator generator = e.getGenerator();
         ExistingFileHelper efh = e.getExistingFileHelper();
 
-        generator.addProvider(e.includeServer(),new RecipeGenerator(generator));
+        generator.addProvider(new RecipeGenerator(generator));
 
-        generator.addProvider(e.includeClient(),new ItemModelsGenerator(generator, MODID, efh));
-        generator.addProvider(e.includeClient(), new BlockStatesGenerator(generator, MODID, efh));
-        generator.addProvider(e.includeClient(), new LangGenerator(generator,MODID,"en_us"));
+        generator.addProvider(new ItemModelsGenerator(generator, MODID, efh));
+        generator.addProvider(new BlockStatesGenerator(generator, MODID, efh));
+        generator.addProvider( new LangGenerator(generator,MODID,"en_us"));
     }
 }

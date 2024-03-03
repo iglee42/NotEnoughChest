@@ -1,6 +1,7 @@
 package fr.iglee42.notenoughchests.mixins;
 
 import fr.iglee42.notenoughchests.NotEnoughChests;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,9 +18,9 @@ public abstract class DeferredRegisterMixin<T> {
     @Shadow @Final private Map<RegistryObject<T>, Supplier<? extends T>> entries;
 
     @Inject(method = "addEntries",at = @At("HEAD"))
-    private void inject(RegisterEvent event, CallbackInfo ci){
+    private void inject(RegistryEvent.Register<?> event, CallbackInfo ci){
         for (Map.Entry<RegistryObject<T>, Supplier<? extends T>> e : entries.entrySet()){
-            NotEnoughChests.onRegistryObjectCreated(e.getKey().getKey().registry(), e.getKey().getId(),event);
+            NotEnoughChests.onRegistryObjectCreated(event.getRegistry().getRegistryName(), e.getKey().getId(),event);
         }
     }
 

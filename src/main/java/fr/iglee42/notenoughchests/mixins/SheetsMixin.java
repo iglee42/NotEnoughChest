@@ -17,7 +17,7 @@ public class SheetsMixin {
     private static void inject(Consumer<Material> p_110781_, CallbackInfo ci){
 
 
-        for (Material single : CustomChestRenderer.single) {
+        /*for (Material single : CustomChestRenderer.single) {
             p_110781_.accept(single);
         }
         for (Material left : CustomChestRenderer.left) {
@@ -25,6 +25,6 @@ public class SheetsMixin {
         }
         for (Material right : CustomChestRenderer.right) {
             p_110781_.accept(right);
-        }
+        }*/
     }
 }
