@@ -2,7 +2,7 @@ name: Texture
 description: There is a missing texture
 labels: ["texture", "enhancement"]
 assignees:
-  - iglee42
+  - MLDEG
 title: "[Texture]"
 body:
   - type: markdown
