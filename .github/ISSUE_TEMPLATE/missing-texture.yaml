@@ -14,8 +14,8 @@ body:
       label: Already Asked
       description: Check this box if no one has already made the request
       options:
-        -label: Asked ?
-         required: true
+        - label: Asked ?
+          required: true
     validations:
       required: true
   - type: input
