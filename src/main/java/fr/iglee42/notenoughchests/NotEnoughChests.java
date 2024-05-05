@@ -132,8 +132,9 @@ public class NotEnoughChests {
             PLANK_TYPES.add(woodType);
             WOOD_TYPES.add(new ResourceLocation(rs.getPath().replace("_planks","").toLowerCase()));
             PLANK_NAME_FORMAT.put(new ResourceLocation(rs.getPath().replace("_planks","").toLowerCase()),"_planks");
-            RegistryObject<Block> chest = BLOCKS.register(woodType.toLowerCase() + "_chest", ()-> new CustomChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(), CHEST::get,PLANK_TYPES.indexOf(woodType)));
-            RegistryObject<Block> trappedChest = BLOCKS.register(woodType.toLowerCase() + "_trapped_chest", ()-> new CustomTrappedChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(),PLANK_TYPES.indexOf(woodType)));
+            int index = WOOD_TYPES.indexOf(new ResourceLocation(rs.getPath().replace("_planks","").toLowerCase()));
+            RegistryObject<Block> chest = BLOCKS.register(woodType.toLowerCase() + "_chest", ()-> new CustomChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(), CHEST::get,index));
+            RegistryObject<Block> trappedChest = BLOCKS.register(woodType.toLowerCase() + "_trapped_chest", ()-> new CustomTrappedChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(),index));
             ITEMS.register(woodType.toLowerCase() +"_chest",()->new BlockItem(chest.get(),new Item.Properties()){
                 @Override
                 public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
@@ -204,6 +205,7 @@ public class NotEnoughChests {
 
     public static void onRegistryObjectCreated(ResourceLocation registryName,ResourceLocation id,RegisterEvent event){
         if (NECCommonConfig.modsBlacklist.contains(id.getNamespace())) return;
+        if (id.getNamespace().equals("ad_astra")) return;
         if (registryName.getPath().equals("block")) {
             if (id.getPath().endsWith("_planks") || id.getPath().startsWith("plank_")) {
                 String woodType = id.getPath().replace("_planks", "").replace("plank_","");

@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.function.Supplier;
 
 public class CustomChestBlock extends ChestBlock {
-    private final int chestTypeIndex;
+    protected final int chestTypeIndex;
 
     public CustomChestBlock(Properties p_51490_, Supplier<BlockEntityType<? extends ChestBlockEntity>> p_51491_, int chestTypeIndex) {
         super(p_51490_, p_51491_);

@@ -20,7 +20,7 @@ public class CustomTrappedChestBlock extends CustomChestBlock {
    }
 
    public BlockEntity newBlockEntity(BlockPos p_154834_, BlockState p_154835_) {
-      return new CustomTrappedChestBlockEntity(p_154834_, p_154835_);
+      return new CustomTrappedChestBlockEntity(p_154834_, p_154835_,chestTypeIndex);
    }
 
    protected Stat<ResourceLocation> getOpenChestStat() {
