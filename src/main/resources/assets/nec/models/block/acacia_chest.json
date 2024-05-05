@@ -1,7 +1,0 @@
-{
-   "parent": "minecraft:block/chest",
-   "textures": {
-        "particle": "nec:entity/chest/acacia",
-        "particle": "nec:entity/chest/acacia"
-    }
-}
