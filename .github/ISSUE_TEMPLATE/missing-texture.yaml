@@ -8,6 +8,15 @@ body:
   - type: markdown
     attributes:
       value: "⚠️ Please make sure the texture is not present in the code"
+  - type: checkboxes
+    id: notAsked
+    attributes:
+      label: Already Asked
+      description: Check this box if no one has already made the request
+      options:
+        - label: Not Asked ?
+    validations:
+      required: true
   - type: input
     id: mod
     attributes:
