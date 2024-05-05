@@ -150,8 +150,7 @@ repositories {
 
     maven {
         name "igleeRepoReleases"
-        url "http://50.20.249.21:8080/releases"
-        allowInsecureProtocol = true
+        url "https://iglee.fr:8081/releases"
     }
 
 
@@ -167,10 +166,10 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
 
-    implementation fg.deobf("curse.maven:biomes-o-plenty-220318:4764804")
-    implementation fg.deobf("curse.maven:terrablender-563928:4764561")
+    //implementation fg.deobf("curse.maven:biomes-o-plenty-220318:4764804")
+    //implementation fg.deobf("curse.maven:terrablender-563928:4764561")
 
-    implementation fg.deobf("curse.maven:regions-unexplored-659110:4779426")
+    //implementation fg.deobf("curse.maven:regions-unexplored-659110:4779426")
 
     //implementation fg.deobf("curse.maven:integrated-dynamics-236307:4791813")
     //implementation fg.deobf("curse.maven:common-capabilities-247007:4620480")
@@ -185,7 +184,7 @@ dependencies {
 
     //implementation fg.deobf("curse.maven:pokecube-aoi-285121:5133485")
 
-    implementation fg.deobf("curse.maven:jei-238222:4712868")
+    //implementation fg.deobf("curse.maven:jei-238222:4712868")
 
 
     implementation fg.deobf("fr.iglee42.igleelib:IgleeLib:${minecraft_version}-${lib_version}")
