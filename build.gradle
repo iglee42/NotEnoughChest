@@ -183,7 +183,7 @@ dependencies {
     //implementation fg.deobf("curse.maven:resourceful-lib-570073:4741196")
     //implementation fg.deobf("curse.maven:athena-841890:4718179")
 
-    implementation fg.deobf("curse.maven:pokecube-aoi-285121:5133485")
+    //implementation fg.deobf("curse.maven:pokecube-aoi-285121:5133485")
 
     implementation fg.deobf("curse.maven:jei-238222:4712868")
 

@@ -14,6 +14,7 @@ public class BlockEntityTypeMixin{
     @Inject(method = "isValid",at = @At("HEAD"), cancellable = true)
     private void inject(BlockState p_155263_, CallbackInfoReturnable<Boolean> cir){
         if (this.equals(NotEnoughChests.CHEST.get())) cir.setReturnValue(true);
+        if (this.equals(NotEnoughChests.TRAPPED_CHEST.get())) cir.setReturnValue(true);
     }
 
 }

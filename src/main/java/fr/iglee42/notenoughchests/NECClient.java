@@ -17,5 +17,6 @@ public class NECClient {
     @SubscribeEvent
     public static void doClientStuff(FMLClientSetupEvent event) {
         BlockEntityRenderers.register(NotEnoughChests.CHEST.get(), CustomChestRenderer::new);
+        BlockEntityRenderers.register(NotEnoughChests.TRAPPED_CHEST.get(), CustomChestRenderer::new);
     }
 }

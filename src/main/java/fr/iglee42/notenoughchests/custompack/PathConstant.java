@@ -2,6 +2,7 @@ package fr.iglee42.notenoughchests.custompack;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import fr.iglee42.notenoughchests.NotEnoughChests;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.File;
@@ -21,6 +22,8 @@ public class PathConstant {
 
     public static Path BLOCK_STATES_PATH;
     public static Path MODELS_PATH;
+    public static Path TEXTURES_PATH;
+    public static Path CHEST_TEXTURES_PATH;
     public static Path ITEM_MODELS_PATH;
     public static Path BLOCK_MODELS_PATH;
 
@@ -34,11 +37,14 @@ public class PathConstant {
     public static Path FORGE_TAGS_PATH;
     public static Path FORGE_BLOCK_TAGS_PATH;
     public static Path FORGE_ITEM_TAGS_PATH;
+    public static Path TAGS_PATH;
+    public static Path BLOCK_TAGS_PATH;
+    public static Path ITEM_TAGS_PATH;
 
 
     public static void init() {
         try {
-            deleteDirectory(FMLPaths.CONFIGDIR.get().resolve("nec/pack"));
+            if (NotEnoughChests.textureServerOnline)deleteDirectory(FMLPaths.CONFIGDIR.get().resolve("nec/pack"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -48,6 +54,7 @@ public class PathConstant {
         DATAS_PATH = ROOT_PATH.resolve("data/nec");
 
         BLOCK_STATES_PATH = ASSETS_PATH.resolve("blockstates");
+        TEXTURES_PATH = ASSETS_PATH.resolve("textures");
         LANGS_PATH = ASSETS_PATH.resolve("lang");
         MODELS_PATH = ASSETS_PATH.resolve("models");
 
@@ -56,6 +63,7 @@ public class PathConstant {
 
         ITEM_MODELS_PATH = MODELS_PATH.resolve("item");
         BLOCK_MODELS_PATH = MODELS_PATH.resolve("block");
+        CHEST_TEXTURES_PATH = TEXTURES_PATH.resolve("entity/chest");
 
         MC_DATA_PATH = ROOT_PATH.resolve("data/minecraft");
         MC_TAGS_PATH = MC_DATA_PATH.resolve("tags");
@@ -67,6 +75,10 @@ public class PathConstant {
         FORGE_TAGS_PATH = FORGE_DATA_PATH.resolve("tags");
         FORGE_BLOCK_TAGS_PATH = FORGE_TAGS_PATH.resolve("blocks");
         FORGE_ITEM_TAGS_PATH = FORGE_TAGS_PATH.resolve("items");
+
+        TAGS_PATH = DATAS_PATH.resolve("tags");
+        BLOCK_TAGS_PATH = TAGS_PATH.resolve("blocks");
+        ITEM_TAGS_PATH = TAGS_PATH.resolve("items");
 
         BLOCK_STATES_PATH.toFile().mkdirs();
         LANGS_PATH.toFile().mkdirs();
@@ -85,6 +97,12 @@ public class PathConstant {
         FORGE_ITEM_TAGS_PATH.toFile().mkdirs();
         FORGE_BLOCK_TAGS_PATH.resolve("chests").toFile().mkdirs();
         FORGE_ITEM_TAGS_PATH.resolve("chests").toFile().mkdirs();
+
+        TAGS_PATH.toFile().mkdirs();
+        BLOCK_TAGS_PATH.toFile().mkdirs();
+        ITEM_TAGS_PATH.toFile().mkdirs();
+
+        CHEST_TEXTURES_PATH.toFile().mkdirs();
 
 
 

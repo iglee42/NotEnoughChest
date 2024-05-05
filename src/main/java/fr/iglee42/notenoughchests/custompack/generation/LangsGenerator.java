@@ -20,10 +20,9 @@ public class LangsGenerator {
     public static void generate() {
 
         NotEnoughChests.WOOD_TYPES.forEach(wt->{
-            if (!wt.getNamespace().equals("minecraft")) {
-                String t = wt.getPath();
-                langs.put("block."+MODID+"."+ ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_chest", ModsUtils.getUpperName(t+"_chest","_"));
-            }
+            String t = wt.getPath();
+            langs.put("block."+MODID+"."+ ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_chest", ModsUtils.getUpperName(t+"_chest","_"));
+            langs.put("block."+MODID+"."+ ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_trapped_chest", ModsUtils.getUpperName(t+"_trapped_chest","_"));
         });
 
         try {

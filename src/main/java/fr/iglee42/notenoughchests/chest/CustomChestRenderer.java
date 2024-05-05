@@ -12,25 +12,37 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import static fr.iglee42.notenoughchests.NotEnoughChests.MODID;
+import static fr.iglee42.notenoughchests.NotEnoughChests.WOOD_TYPES;
 
 @OnlyIn(Dist.CLIENT)
 public class CustomChestRenderer extends ChestRenderer<CustomChestBlockEntity> {
-    public static Material[] single;
-    public static Material[] left;
-    public static Material[] right;
+    public static Map<ResourceLocation,Material> single;
+    public static Map<ResourceLocation,Material> left;
+    public static Map<ResourceLocation,Material> right;
+    public static Map<ResourceLocation,Material> single_trapped;
+    public static Map<ResourceLocation,Material> left_trapped;
+    public static Map<ResourceLocation,Material> right_trapped;
     private static boolean christmas;
 
     static {
-        single = new Material[NotEnoughChests.PLANK_TYPES.size()];
-        left = new Material[NotEnoughChests.PLANK_TYPES.size()];
-        right = new Material[NotEnoughChests.PLANK_TYPES.size()];
-        for (int i = 0; i < NotEnoughChests.PLANK_TYPES.size(); i++) {
+        single = new HashMap<>();
+        left = new HashMap<>();
+        right = new HashMap<>();
+        single_trapped = new HashMap<>();
+        left_trapped = new HashMap<>();
+        right_trapped = new HashMap<>();
+        for (int i = 0; i < NotEnoughChests.WOOD_TYPES.size(); i++) {
             ResourceLocation type = NotEnoughChests.WOOD_TYPES.get(i);
-            single[i] = getChestMaterial(ModAbbreviation.getChestTexture(type));
-            left[i] = getChestMaterial(ModAbbreviation.getChestTexture(type) + "_left");
-            right[i] = getChestMaterial(ModAbbreviation.getChestTexture(type) + "_right");
+            single.put(type,getChestMaterial(ModAbbreviation.getChestTexture(type),"single"));
+            left.put(type,getChestMaterial(ModAbbreviation.getChestTexture(type),"left"));
+            right.put(type,getChestMaterial(ModAbbreviation.getChestTexture(type), "right"));
+            single_trapped.put(type,getTrappedMaterial(ModAbbreviation.getChestTexture(type),"single"));
+            left_trapped.put(type,getTrappedMaterial(ModAbbreviation.getChestTexture(type),"left"));
+            right_trapped.put(type,getTrappedMaterial(ModAbbreviation.getChestTexture(type), "right"));
         }
     }
 
@@ -55,15 +67,20 @@ public class CustomChestRenderer extends ChestRenderer<CustomChestBlockEntity> {
         };
     }
 
-    private static Material getChestMaterial(String path) {
-        return new Material(Sheets.CHEST_SHEET, new ResourceLocation(MODID,"entity/chest/" + path));
+    private static Material getChestMaterial(String path,String type) {
+        return new Material(Sheets.CHEST_SHEET, new ResourceLocation(MODID,"entity/chest/" + type + "/" + path));
+    }
+    private static Material getTrappedMaterial(String path,String type) {
+        return new Material(Sheets.CHEST_SHEET, new ResourceLocation(MODID,"entity/chest/trapped_" + type + "/" + path));
     }
 
     private Material getChestMaterial(CustomChestBlockEntity tile, ChestType type) {
         if (christmas) {
             return Sheets.chooseMaterial(tile, type, true);
+        } else if (tile instanceof CustomTrappedChestBlockEntity) {
+            return chooseMaterial(type, left_trapped.get(WOOD_TYPES.get(tile.getChestTypeIndex())), right_trapped.get(WOOD_TYPES.get(tile.getChestTypeIndex())), single_trapped.get(WOOD_TYPES.get(tile.getChestTypeIndex())));
         } else {
-            return chooseMaterial(type, left[tile.getChestTypeIndex()], right[tile.getChestTypeIndex()], single[tile.getChestTypeIndex()]);
+            return chooseMaterial(type, left.get(WOOD_TYPES.get(tile.getChestTypeIndex())), right.get(WOOD_TYPES.get(tile.getChestTypeIndex())), single.get(WOOD_TYPES.get(tile.getChestTypeIndex())));
         }
     }
 }

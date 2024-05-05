@@ -13,11 +13,11 @@ import static fr.iglee42.notenoughchests.NotEnoughChests.MODID;
 public class ModelsGenerator {
     public static void generate() {
         NotEnoughChests.WOOD_TYPES.forEach(wt->{
-            if (!wt.getNamespace().equals("minecraft")) {
-                String t = wt.getPath();
-                itemFromParent(ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t + "_chest", MODID + ":item/chest_base", new TextureKey("wood_type", MODID + ":entity/chest/" + ModAbbreviation.getChestTexture(wt)));
-                blockFromParent(ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t + "_chest", "minecraft:block/chest", new TextureKey("particle", MODID + ":entity/chest/" + ModAbbreviation.getChestTexture(wt)));
-            }
+            String t = wt.getPath();
+            itemFromParent(ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t + "_chest", MODID + ":item/chest_base", new TextureKey("wood_type", MODID + ":entity/chest/single/" + ModAbbreviation.getChestTexture(wt)));
+            blockFromParent(ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t + "_chest", "minecraft:block/chest", new TextureKey("particle", MODID + ":entity/chest/single/" + ModAbbreviation.getChestTexture(wt)));
+            itemFromParent(ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t + "_trapped_chest", MODID + ":item/chest_base", new TextureKey("wood_type", MODID + ":entity/chest/trapped_single/" + ModAbbreviation.getChestTexture(wt)));
+            blockFromParent(ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t + "_trapped_chest", "minecraft:block/chest", new TextureKey("particle", MODID + ":entity/chest/trapped_single/" + ModAbbreviation.getChestTexture(wt)));
         });
     }
 

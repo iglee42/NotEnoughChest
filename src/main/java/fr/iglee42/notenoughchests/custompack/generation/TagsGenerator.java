@@ -18,13 +18,14 @@ import static fr.iglee42.notenoughchests.NotEnoughChests.MODID;
 public class TagsGenerator {
 
     private static List<String> chests = new ArrayList<>();
+    private static List<String> onlyChests = new ArrayList<>();
     public static void generate() {
 
         NotEnoughChests.WOOD_TYPES.forEach(wt->{
-            if (!wt.getNamespace().equals("minecraft")) {
-                String t = wt.getPath();
-                chests.add(MODID+":"+ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_chest");
-            }
+            String t = wt.getPath();
+            chests.add(MODID+":"+ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_chest");
+            onlyChests.add(MODID+":"+ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_chest");
+            chests.add(MODID+":"+ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_trapped_chest");
         });
 
         try {
@@ -34,11 +35,22 @@ public class TagsGenerator {
             chests.forEach(chest::add);
             tag.add("values",chest);
 
+            JsonObject onlyC = new JsonObject();
+            onlyC.addProperty("replace",false);
+            JsonArray oc = new JsonArray();
+            onlyChests.forEach(oc::add);
+            onlyC.add("values",oc);
+
+
             writeChestTag(tag,new File(PathConstant.FORGE_BLOCK_TAGS_PATH.toFile(), "chests.json"));
+            writeChestTag(tag,new File(PathConstant.BLOCK_TAGS_PATH.toFile(), "chests.json"));
             writeChestTag(tag,new File(PathConstant.FORGE_BLOCK_TAGS_PATH.toFile()+"/chests", "wooden.json"));
             writeChestTag(tag,new File(PathConstant.FORGE_ITEM_TAGS_PATH.toFile(), "chests.json"));
+            writeChestTag(tag,new File(PathConstant.ITEM_TAGS_PATH.toFile(), "chests.json"));
             writeChestTag(tag,new File(PathConstant.FORGE_ITEM_TAGS_PATH.toFile()+"/chests", "wooden.json"));
             writeChestTag(tag,new File(PathConstant.MC_MINEABLE_TAGS_PATH.toFile(), "axe.json"));
+            writeChestTag(onlyC,new File(PathConstant.MC_BLOCK_TAGS_PATH.toFile(), "features_cannot_replace.json"));
+            writeChestTag(tag,new File(PathConstant.MC_BLOCK_TAGS_PATH.toFile(), "guarded_by_piglins.json"));
 
         } catch (Exception exception){
             NotEnoughChests.LOGGER.error("An error was detected when tags generating",exception);

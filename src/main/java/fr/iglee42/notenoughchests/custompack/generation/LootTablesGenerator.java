@@ -10,9 +10,8 @@ import java.io.FileWriter;
 public class LootTablesGenerator {
     public static void generate() {
         NotEnoughChests.WOOD_TYPES.stream().forEach(rs->{
-            if (!rs.getNamespace().equals("minecraft")){
-                chest(rs.getNamespace(),rs.getPath());
-            }
+            chest(rs.getNamespace(),rs.getPath());
+            chest(rs.getNamespace(),rs.getPath()+"_trapped");
         });
     }
 
