@@ -24,10 +24,10 @@ public class TagsGenerator {
 
         NotEnoughChests.WOOD_TYPES.forEach(wt->{
             String t = wt.getPath();
-            chests.add(MODID+":"+ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_chest");
-            onlyChests.add(MODID+":"+ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_chest");
-            chests.add(MODID+":"+ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_trapped_chest");
-            onlyTrapped.add(MODID+":"+ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_trapped_chest");
+            chests.add(MODID+":"+ModAbbreviation.getModAbbreviation(wt.getNamespace()) + t+"_chest");
+            onlyChests.add(MODID+":"+ModAbbreviation.getModAbbreviation(wt.getNamespace()) + t+"_chest");
+            chests.add(MODID+":"+ModAbbreviation.getModAbbreviation(wt.getNamespace()) + t+"_trapped_chest");
+            onlyTrapped.add(MODID+":"+ModAbbreviation.getModAbbreviation(wt.getNamespace()) + t+"_trapped_chest");
         });
 
         try {

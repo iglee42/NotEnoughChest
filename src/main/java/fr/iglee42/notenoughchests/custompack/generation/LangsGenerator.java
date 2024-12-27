@@ -21,8 +21,8 @@ public class LangsGenerator {
 
         NotEnoughChests.WOOD_TYPES.forEach(wt->{
             String t = wt.getPath();
-            langs.put("block."+MODID+"."+ ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_chest", ModsUtils.getUpperName(t+"_chest","_"));
-            langs.put("block."+MODID+"."+ ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_trapped_chest", ModsUtils.getUpperName(t+"_trapped_chest","_"));
+            langs.put("block."+MODID+"."+ ModAbbreviation.getModAbbreviation(wt.getNamespace()) + t+"_chest", ModsUtils.getUpperName(t+"_chest","_"));
+            langs.put("block."+MODID+"."+ ModAbbreviation.getModAbbreviation(wt.getNamespace()) + t+"_trapped_chest", ModsUtils.getUpperName(t+"_trapped_chest","_"));
         });
 
         try {

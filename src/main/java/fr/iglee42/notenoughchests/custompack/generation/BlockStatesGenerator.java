@@ -13,8 +13,8 @@ public class BlockStatesGenerator {
     public static void generate() {
         NotEnoughChests.WOOD_TYPES.forEach(wt->{
             String t = wt.getPath();
-            blockState(ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_chest");
-            blockState(ModAbbreviation.getModAbbrevation(wt.getNamespace()) + t+"_trapped_chest");
+            blockState(ModAbbreviation.getModAbbreviation(wt.getNamespace()) + t+"_chest");
+            blockState(ModAbbreviation.getModAbbreviation(wt.getNamespace()) + t+"_trapped_chest");
         });
     }
     private static void blockState(String name){

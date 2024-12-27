@@ -17,20 +17,20 @@ public class RecipesGenerator {
     }
     private static void trappedChest(String modid,String name){
         try {
-            FileWriter writer = new FileWriter(new File(PathConstant.RECIPES_PATH.toFile(), ModAbbreviation.getModAbbrevation(modid)+name+"_trapped_chest.json"));
+            FileWriter writer = new FileWriter(new File(PathConstant.RECIPES_PATH.toFile(), ModAbbreviation.getModAbbreviation(modid)+name+"_trapped_chest.json"));
             writer.write("{\n" +
                     "  \"type\": \"minecraft:crafting_shapeless\",\n" +
                     "  \"category\": \"redstone\",\n" +
                     "  \"ingredients\": [\n" +
                     "    {\n" +
-                    "       \"item\": \"nec:"+ModAbbreviation.getModAbbrevation(modid)+name+"_chest\"\n" +
+                    "       \"item\": \"nec:"+ModAbbreviation.getModAbbreviation(modid)+name+"_chest\"\n" +
                     "    },\n" +
                     "    {\n" +
                     "      \"item\": \"minecraft:tripwire_hook\"\n" +
                     "    }\n" +
                     "  ],\n" +
                     "  \"result\": {\n" +
-                    "    \"item\": \"nec:"+ModAbbreviation.getModAbbrevation(modid)+name+"_trapped_chest\"\n" +
+                    "    \"item\": \"nec:"+ModAbbreviation.getModAbbreviation(modid)+name+"_trapped_chest\"\n" +
                     "  }\n" +
                     "}");
 
@@ -44,7 +44,7 @@ public class RecipesGenerator {
 
     private static void chest(String modid,String name){
         try {
-            FileWriter writer = new FileWriter(new File(PathConstant.RECIPES_PATH.toFile(), ModAbbreviation.getModAbbrevation(modid)+name+"_chest.json"));
+            FileWriter writer = new FileWriter(new File(PathConstant.RECIPES_PATH.toFile(), ModAbbreviation.getModAbbreviation(modid)+name+"_chest.json"));
             writer.write("{\n" +
                     "  \"type\": \"minecraft:crafting_shaped\",\n" +
                     "  \"pattern\": [\n" +
@@ -58,7 +58,7 @@ public class RecipesGenerator {
                     "    }\n" +
                     "  },\n" +
                     "  \"result\": {\n" +
-                    "    \"item\": \"nec:"+ModAbbreviation.getModAbbrevation(modid)+name+"_chest\"\n" +
+                    "    \"item\": \"nec:"+ModAbbreviation.getModAbbreviation(modid)+name+"_chest\"\n" +
                     "  }\n" +
                     "}");
             writer.close();

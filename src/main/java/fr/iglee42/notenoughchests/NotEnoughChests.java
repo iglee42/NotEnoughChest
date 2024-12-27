@@ -14,7 +14,6 @@ import fr.iglee42.notenoughchests.custompack.generation.*;
 import fr.iglee42.notenoughchests.utils.DownloadAndZipUtils;
 import fr.iglee42.notenoughchests.utils.ModAbbreviation;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +22,6 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.TrappedChestBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -41,10 +39,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegisterEvent;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -96,6 +91,13 @@ public class NotEnoughChests {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
+
+        try {
+            ModAbbreviation.init();
+        } catch (IOException ignored) {
+            NotEnoughChests.LOGGER.error("API isn't online, some chests may not work correctly !");
+        }
+
 
         try {
             if (FMLEnvironment.dist == Dist.CLIENT) {
@@ -212,39 +214,40 @@ public class NotEnoughChests {
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
 
-    public static void onRegistryObjectCreated(ResourceLocation registryName,ResourceLocation id,RegisterEvent event){
+    public static void onRegister(IForgeRegistry<?> registry, ResourceLocation id){
         if (NECCommonConfig.modsBlacklist.contains(id.getNamespace())) return;
         if (id.getNamespace().equals("ad_astra")) return;
-        if (registryName.getPath().equals("block")) {
+        if (registry.getRegistryKey().location().getPath().equals("block")) {
             if (id.getPath().endsWith("_planks") || id.getPath().startsWith("plank_")) {
                 String woodType = id.getPath().replace("_planks", "").replace("plank_","");
                 if (WOOD_TYPES.contains(new ResourceLocation(id.getNamespace(), woodType.toLowerCase())) ) {
-                    if (ForgeRegistries.BLOCKS.containsKey(new ResourceLocation(MODID, ModAbbreviation.getModAbbrevation(id.getNamespace()) + woodType + "_chest"))) return;
+                    if (ForgeRegistries.BLOCKS.containsKey(new ResourceLocation(MODID, ModAbbreviation.getModAbbreviation(id.getNamespace()) + woodType + "_chest"))) return;
                     WOOD_TYPES.remove(new ResourceLocation(id.getNamespace(), woodType.toLowerCase()));
                     PLANK_TYPES.remove(woodType);
                     PLANK_NAME_FORMAT.remove(new ResourceLocation(id.getNamespace(), woodType.toLowerCase()));
-                    CHESTS_TO_WOOD.remove(new ResourceLocation(MODID, ModAbbreviation.getModAbbrevation(id.getNamespace()) + woodType + "_chest"));
-                    TRAPPED_CHESTS_TO_WOOD.remove(new ResourceLocation(MODID, ModAbbreviation.getModAbbrevation(id.getNamespace()) + woodType + "_trapped_chest"));
+                    CHESTS_TO_WOOD.remove(new ResourceLocation(MODID, ModAbbreviation.getModAbbreviation(id.getNamespace()) + woodType + "_chest"));
+                    TRAPPED_CHESTS_TO_WOOD.remove(new ResourceLocation(MODID, ModAbbreviation.getModAbbreviation(id.getNamespace()) + woodType + "_trapped_chest"));
                 }
                 WOOD_TYPES.add(new ResourceLocation(id.getNamespace(), woodType.toLowerCase()));
                 PLANK_TYPES.add(woodType);
                 PLANK_NAME_FORMAT.put(new ResourceLocation(id.getNamespace(), woodType.toLowerCase()),id.getPath().endsWith("_planks")?"_planks":(id.getPath().startsWith("plank_")?"plank_":""));
-                CHESTS_TO_WOOD.put(new ResourceLocation(MODID, ModAbbreviation.getModAbbrevation(id.getNamespace()) + woodType + "_chest"),new ResourceLocation(id.getNamespace(), woodType.toLowerCase()));
-                TRAPPED_CHESTS_TO_WOOD.put(new ResourceLocation(MODID, ModAbbreviation.getModAbbrevation(id.getNamespace()) + woodType + "_trapped_chest"),new ResourceLocation(id.getNamespace(), woodType.toLowerCase()));
-
-                event.register(ForgeRegistries.Keys.BLOCKS, new ResourceLocation(MODID, ModAbbreviation.getModAbbrevation(id.getNamespace()) + woodType + "_chest"), () -> new CustomChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(), CHEST::get, WOOD_TYPES.indexOf(new ResourceLocation(id.getNamespace(), woodType.toLowerCase()))));
-                event.register(ForgeRegistries.Keys.BLOCKS, new ResourceLocation(MODID, ModAbbreviation.getModAbbrevation(id.getNamespace()) + woodType + "_trapped_chest"), () -> new CustomTrappedChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(), WOOD_TYPES.indexOf(new ResourceLocation(id.getNamespace(), woodType.toLowerCase()))));
+                CHESTS_TO_WOOD.put(new ResourceLocation(MODID, ModAbbreviation.getModAbbreviation(id.getNamespace()) + woodType + "_chest"),new ResourceLocation(id.getNamespace(), woodType.toLowerCase()));
+                TRAPPED_CHESTS_TO_WOOD.put(new ResourceLocation(MODID, ModAbbreviation.getModAbbreviation(id.getNamespace()) + woodType + "_trapped_chest"),new ResourceLocation(id.getNamespace(), woodType.toLowerCase()));
+                IForgeRegistry<Block> castedRegistry = (IForgeRegistry<Block>) registry;
+                castedRegistry.register(new ResourceLocation(MODID, ModAbbreviation.getModAbbreviation(id.getNamespace()) + woodType + "_chest"),  new CustomChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(), CHEST::get, WOOD_TYPES.indexOf(new ResourceLocation(id.getNamespace(), woodType.toLowerCase()))));
+                castedRegistry.register(new ResourceLocation(MODID, ModAbbreviation.getModAbbreviation(id.getNamespace()) + woodType + "_trapped_chest"), new CustomTrappedChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava(), WOOD_TYPES.indexOf(new ResourceLocation(id.getNamespace(), woodType.toLowerCase()))));
             }
-        } else if (registryName.getPath().equals("item")) {
+        } else if (registry.getRegistryKey().location().getPath().equals("item")) {
+            IForgeRegistry<Item> castedRegistry = (IForgeRegistry<Item>) registry;
             if (id.getPath().endsWith("_planks")  || id.getPath().startsWith("plank_")) {
                 String woodType = id.getPath().replace("_planks", "").replace("plank_","");
-                event.register(ForgeRegistries.Keys.ITEMS, new ResourceLocation(MODID, ModAbbreviation.getModAbbrevation(id.getNamespace()) + woodType + "_chest"), () -> new BlockItem(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MODID,ModAbbreviation.getModAbbrevation(id.getNamespace())+woodType + "_chest")),new Item.Properties()){
+                castedRegistry.register(new ResourceLocation(MODID, ModAbbreviation.getModAbbreviation(id.getNamespace()) + woodType + "_chest"), new BlockItem(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MODID,ModAbbreviation.getModAbbreviation(id.getNamespace())+woodType + "_chest")),new Item.Properties()){
                     @Override
                     public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
                         return 300;
                     }
                 });
-                event.register(ForgeRegistries.Keys.ITEMS, new ResourceLocation(MODID, ModAbbreviation.getModAbbrevation(id.getNamespace()) + woodType + "_trapped_chest"), () -> new BlockItem(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MODID,ModAbbreviation.getModAbbrevation(id.getNamespace())+woodType + "_trapped_chest")),new Item.Properties()){
+                castedRegistry.register(new ResourceLocation(MODID, ModAbbreviation.getModAbbreviation(id.getNamespace()) + woodType + "_trapped_chest"), new BlockItem(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MODID,ModAbbreviation.getModAbbreviation(id.getNamespace())+woodType + "_trapped_chest")),new Item.Properties()){
                     @Override
                     public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
                         return 300;
@@ -300,7 +303,7 @@ public class NotEnoughChests {
                 if (textureServerOnline) {
                     List<Integer> idsToDownload = new ArrayList<>();
                     WOOD_TYPES.forEach(wt -> {
-                        String abrev = ModAbbreviation.getModAbbrevation(wt.getNamespace());
+                        String abrev = ModAbbreviation.getModAbbreviation(wt.getNamespace());
                         Map<String, Integer> ids = new HashMap<>();
                         if (chestTextureIds != null)chestTextureIds.asMap().forEach((id, el) -> ids.put(id, el.getAsInt()));
                         int id;
@@ -311,6 +314,7 @@ public class NotEnoughChests {
                         }
                         idsToDownload.add(id);
                     });
+                    LOGGER.info("{} chests' textures to download !", idsToDownload.size());
                     StringBuilder array = new StringBuilder("[");
                     for (int i = 0; i < idsToDownload.size(); i++) {
                         array.append(idsToDownload.get(i));
@@ -322,8 +326,10 @@ public class NotEnoughChests {
                         File zipFile = new File(PathConstant.ROOT_PATH.toString(), "chests.zip");
                         DownloadAndZipUtils.downloadUsingStream(url, zipFile);
                         DownloadAndZipUtils.unzip(zipFile, PathConstant.CHEST_TEXTURES_PATH.toFile());
+                        LOGGER.info("{} chests' textures downloaded !", idsToDownload.size());
+
                     } catch (Exception ex) {
-                        ex.printStackTrace();
+                        LOGGER.error("Failed to download chests' textures !");
                     }
                 }
                 ModelsGenerator.generate();

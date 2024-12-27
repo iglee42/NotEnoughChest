@@ -17,7 +17,7 @@ public class LootTablesGenerator {
 
     private static void chest(String modid,String name){
         try {
-            FileWriter writer = new FileWriter(new File(PathConstant.LOOT_TABLES_PATH.toFile(), ModAbbreviation.getModAbbrevation(modid) + name+"_chest.json"));
+            FileWriter writer = new FileWriter(new File(PathConstant.LOOT_TABLES_PATH.toFile(), ModAbbreviation.getModAbbreviation(modid) + name+"_chest.json"));
             writer.write("{\n" +
                     "  \"type\": \"minecraft:block\",\n" +
                     "  \"pools\": [\n" +
@@ -31,13 +31,13 @@ public class LootTablesGenerator {
                     "      \"entries\": [\n" +
                     "        {\n" +
                     "          \"type\": \"minecraft:item\",\n" +
-                    "          \"name\": \"nec:"+ModAbbreviation.getModAbbrevation(modid) +name+"_chest\"\n" +
+                    "          \"name\": \"nec:"+ModAbbreviation.getModAbbreviation(modid) +name+"_chest\"\n" +
                     "        }\n" +
                     "      ],\n" +
                     "      \"rolls\": 1.0\n" +
                     "    }\n" +
                     "  ],\n" +
-                    "  \"random_sequence\": \"nec:"+ModAbbreviation.getModAbbrevation(modid) +name+"_chest\"\n" +
+                    "  \"random_sequence\": \"nec:"+ModAbbreviation.getModAbbreviation(modid) +name+"_chest\"\n" +
                     "}");
             writer.close();
         } catch (Exception exception){

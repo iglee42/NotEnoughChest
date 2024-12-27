@@ -6,7 +6,7 @@
   "refmap": "nec.refmap.json",
   "mixins": [
     "BlockEntityTypeMixin",
-    "DeferredRegisterMixin",
+    "RegisterEventMixin",
     "ResourcePackLoaderMixin"
   ],
   "client": [

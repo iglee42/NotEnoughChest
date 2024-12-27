@@ -25,8 +25,8 @@ public class NECPackFinder implements RepositorySource {
 	@Override
 	public void loadPacks(Consumer<Pack> infoConsumer) {
 		Path rootPath = PathConstant.ROOT_PATH;
-		Pack pack = Pack.create("nec_"+type.getSuffix(),Component.literal("NEC_PACK"),true,
-				(t)-> new InMemoryPack(rootPath),new Pack.Info(Component.literal("NEC_PACK_DESC"),12, FeatureFlagSet.of(FeatureFlags.VANILLA)),type.getVanillaType(), Pack.Position.TOP,true, PackSource.BUILT_IN);
+		Pack pack = Pack.create("nec_"+type.getSuffix(),Component.literal("NEC InCode Pack"),true,
+				(t)-> new InMemoryPack(rootPath),new Pack.Info(Component.literal("Custom resource pack used in NEC code"),15, FeatureFlagSet.of(FeatureFlags.VANILLA)),type.getVanillaType(), Pack.Position.TOP,true, PackSource.BUILT_IN);
 		if (pack != null){
 			infoConsumer.accept(pack);
 		}

@@ -102,7 +102,7 @@ public class InMemoryPack implements PackResources {
     public <T> T getMetadataSection(MetadataSectionSerializer<T> deserializer) throws IOException {
         JsonObject jsonobject = new JsonObject();
         JsonObject packObject = new JsonObject();
-        packObject.addProperty("pack_format", 16);
+        packObject.addProperty("pack_format", 15);
         packObject.addProperty("description", "nec");
         jsonobject.add("pack", packObject);
         if (!jsonobject.has(deserializer.getMetadataSectionName())) {

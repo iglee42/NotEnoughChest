@@ -3,22 +3,22 @@ Chose 22 files
 Processing 22 files
 processing PsiJavaFile:DeferredRegisterMixin.java = src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java
 @|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|8|41|fr.iglee42.notenoughchests.mixins|package|fr.iglee42.notenoughchests.mixins|(file)
-@|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|851|872|DeferredRegisterMixin|class|fr.iglee42.notenoughchests.mixins.DeferredRegisterMixin
+@|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|851|872|DeferredRegisterMixin|class|fr.iglee42.notenoughchests.mixins.RegisterEventMixin
 @|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|904|920|DeferredRegister|class|net.minecraftforge.registries.DeferredRegister
 WARNING: no code reference element for PsiTypeElement:?
-@|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|924|932|register|field|fr.iglee42.notenoughchests.mixins.DeferredRegisterMixin|register
-@|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1084|1095|handleEvent|method|fr.iglee42.notenoughchests.mixins.DeferredRegisterMixin|handleEvent|(Lnet/minecraftforge/registries/RegisterEvent;)Lvoid;
+@|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|924|932|register|field|fr.iglee42.notenoughchests.mixins.RegisterEventMixin|register
+@|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1084|1095|handleEvent|method|fr.iglee42.notenoughchests.mixins.RegisterEventMixin|handleEvent|(Lnet/minecraftforge/registries/RegisterEvent;)Lvoid;
 @|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1096|1109|RegisterEvent|class|net.minecraftforge.registries.RegisterEvent
-@|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1110|1115|event|param|fr.iglee42.notenoughchests.mixins.DeferredRegisterMixin|handleEvent|(Lnet/minecraftforge/registries/RegisterEvent;)Lvoid;|event|0
+@|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1110|1115|event|param|fr.iglee42.notenoughchests.mixins.RegisterEventMixin|handleEvent|(Lnet/minecraftforge/registries/RegisterEvent;)Lvoid;|event|0
 @|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1157|1163|equals|method|net.minecraft.resources.ResourceLocation|equals|(Ljava/lang/Object;)Z
 @|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1139|1154|getRegistryName|method|net.minecraftforge.registries.DeferredRegister|getRegistryName|()Lnet/minecraft/resources/ResourceLocation;
-@|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1130|1138|register|field|fr.iglee42.notenoughchests.mixins.DeferredRegisterMixin|register
+@|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1130|1138|register|field|fr.iglee42.notenoughchests.mixins.RegisterEventMixin|register
 @|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1187|1202|getRegistryName|method|net.minecraftforge.registries.IForgeRegistry|getRegistryName|()Lnet/minecraft/resources/ResourceLocation;
 @|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1180|1186|BLOCKS|field|net.minecraftforge.registries.ForgeRegistries|BLOCKS
 @|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1164|1179|ForgeRegistries|class|net.minecraftforge.registries.ForgeRegistries
 @|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1237|1251|registerBlocks|method|fr.iglee42.notenoughchests.NotEnoughChests|registerBlocks|(Lnet/minecraftforge/registries/RegisterEvent;)V
 @|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1221|1236|NotEnoughtChest|class|fr.iglee42.notenoughchests.NotEnoughChests
-@|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1252|1257|event|param|fr.iglee42.notenoughchests.mixins.DeferredRegisterMixin|handleEvent|(Lnet/minecraftforge/registries/RegisterEvent;)Lvoid;|event|0
+@|src/main/java/fr/iglee42/notenoughtchest/mixins/DeferredRegisterMixin.java|1252|1257|event|param|fr.iglee42.notenoughchests.mixins.RegisterEventMixin|handleEvent|(Lnet/minecraftforge/registries/RegisterEvent;)Lvoid;|event|0
 processing PsiJavaFile:CustomChestRenderer.java = src/main/java/fr/iglee42/notenoughtchest/CustomChestRenderer.java
 @|src/main/java/fr/iglee42/notenoughtchest/CustomChestRenderer.java|8|34|fr.iglee42.notenoughchests|package|fr.iglee42.notenoughchests|(file)
 @|src/main/java/fr/iglee42/notenoughtchest/CustomChestRenderer.java|618|637|CustomChestRenderer|class|fr.iglee42.notenoughchests.chest.CustomChestRenderer
