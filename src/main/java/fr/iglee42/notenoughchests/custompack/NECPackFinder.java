@@ -1,14 +1,13 @@
 package fr.iglee42.notenoughchests.custompack;
 
-import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackSelectionConfig;
 import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.server.packs.repository.RepositorySource;
-import net.minecraft.world.flag.FeatureFlagSet;
-import net.minecraft.world.flag.FeatureFlags;
 
 import java.nio.file.Path;
 import java.util.function.Consumer;
+
+import static net.minecraft.server.packs.repository.BuiltInPackSource.fixedResources;
 
 public class NECPackFinder implements RepositorySource {
 
@@ -25,10 +24,10 @@ public class NECPackFinder implements RepositorySource {
 	@Override
 	public void loadPacks(Consumer<Pack> infoConsumer) {
 		Path rootPath = PathConstant.ROOT_PATH;
-		Pack pack = Pack.create("nec_"+type.getSuffix(),Component.literal("NEC InCode Pack"),true,
-				(t)-> new InMemoryPack(rootPath),new Pack.Info(Component.literal("Custom resource pack used in NEC code"),15, FeatureFlagSet.of(FeatureFlags.VANILLA)),type.getVanillaType(), Pack.Position.TOP,true, PackSource.BUILT_IN);
+		Pack pack = Pack.readMetaAndCreate(InMemoryPack.getPackInfo(type.getVanillaType()),fixedResources(new InMemoryPack(type.getVanillaType(),rootPath)),type.getVanillaType(),new PackSelectionConfig(true, Pack.Position.TOP,true));
 		if (pack != null){
 			infoConsumer.accept(pack);
 		}
 	}
+
 }

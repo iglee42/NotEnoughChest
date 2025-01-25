@@ -3,7 +3,7 @@ package fr.iglee42.notenoughchests.custompack;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import fr.iglee42.notenoughchests.NotEnoughChests;
-import net.minecraftforge.fml.loading.FMLPaths;
+import net.neoforged.fml.loading.FMLPaths;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -58,8 +58,8 @@ public class PathConstant {
         LANGS_PATH = ASSETS_PATH.resolve("lang");
         MODELS_PATH = ASSETS_PATH.resolve("models");
 
-        RECIPES_PATH = DATAS_PATH.resolve("recipes");
-        LOOT_TABLES_PATH = DATAS_PATH.resolve("loot_tables/blocks");
+        RECIPES_PATH = DATAS_PATH.resolve("recipe");
+        LOOT_TABLES_PATH = DATAS_PATH.resolve("loot_table/blocks");
 
         ITEM_MODELS_PATH = MODELS_PATH.resolve("item");
         BLOCK_MODELS_PATH = MODELS_PATH.resolve("block");
@@ -67,18 +67,18 @@ public class PathConstant {
 
         MC_DATA_PATH = ROOT_PATH.resolve("data/minecraft");
         MC_TAGS_PATH = MC_DATA_PATH.resolve("tags");
-        MC_BLOCK_TAGS_PATH = MC_TAGS_PATH.resolve("blocks");
-        MC_ITEM_TAGS_PATH = MC_TAGS_PATH.resolve("items");
+        MC_BLOCK_TAGS_PATH = MC_TAGS_PATH.resolve("block");
+        MC_ITEM_TAGS_PATH = MC_TAGS_PATH.resolve("item");
         MC_MINEABLE_TAGS_PATH = MC_BLOCK_TAGS_PATH.resolve("mineable");
 
         FORGE_DATA_PATH = ROOT_PATH.resolve("data/forge");
         FORGE_TAGS_PATH = FORGE_DATA_PATH.resolve("tags");
-        FORGE_BLOCK_TAGS_PATH = FORGE_TAGS_PATH.resolve("blocks");
-        FORGE_ITEM_TAGS_PATH = FORGE_TAGS_PATH.resolve("items");
+        FORGE_BLOCK_TAGS_PATH = FORGE_TAGS_PATH.resolve("block");
+        FORGE_ITEM_TAGS_PATH = FORGE_TAGS_PATH.resolve("item");
 
         TAGS_PATH = DATAS_PATH.resolve("tags");
-        BLOCK_TAGS_PATH = TAGS_PATH.resolve("blocks");
-        ITEM_TAGS_PATH = TAGS_PATH.resolve("items");
+        BLOCK_TAGS_PATH = TAGS_PATH.resolve("block");
+        ITEM_TAGS_PATH = TAGS_PATH.resolve("item");
 
         BLOCK_STATES_PATH.toFile().mkdirs();
         LANGS_PATH.toFile().mkdirs();

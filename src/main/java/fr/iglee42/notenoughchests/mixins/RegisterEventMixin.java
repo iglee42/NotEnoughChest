@@ -4,7 +4,7 @@ import fr.iglee42.notenoughchests.NotEnoughChests;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.registries.RegisterEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.*;
@@ -21,16 +21,14 @@ public abstract class RegisterEventMixin<T> {
 
     @Shadow @Final private @NotNull ResourceKey<? extends Registry<?>> registryKey;
 
-    @Shadow @Final private @Nullable Registry<?> vanillaRegistry;
+    @Shadow @Final private @Nullable Registry<?> registry;
 
-    @Shadow @Final
-    @Nullable ForgeRegistry<?> forgeRegistry;
 
     @Inject(method = "register(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;Ljava/util/function/Supplier;)V",at = @At("HEAD"),locals = LocalCapture.CAPTURE_FAILSOFT)
     private void inject(ResourceKey<? extends Registry<T>> registryKey, ResourceLocation name, Supplier<T> valueSupplier, CallbackInfo ci){
 
         if (this.registryKey.equals(registryKey) && !name.getNamespace().equals(NotEnoughChests.MODID)){
-            if (forgeRegistry != null)NotEnoughChests.onRegister(forgeRegistry,name);
+            if (registry != null)NotEnoughChests.onRegister(registry,name);
 
         }
     }

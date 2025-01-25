@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = BlockEntityType.class)
 public class BlockEntityTypeMixin{
 
-    @Inject(method = "isValid",at = @At("HEAD"), cancellable = true)
+    @Inject(method = "isValid",at = @At("HEAD"), cancellable = true,remap = false)
     private void inject(BlockState p_155263_, CallbackInfoReturnable<Boolean> cir){
         if (this.equals(NotEnoughChests.CHEST.get())) cir.setReturnValue(true);
         if (this.equals(NotEnoughChests.TRAPPED_CHEST.get())) cir.setReturnValue(true);

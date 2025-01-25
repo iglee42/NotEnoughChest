@@ -6,11 +6,13 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.ChestRenderer;
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.ChestType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -77,14 +79,14 @@ public class CustomChestRenderer extends ChestRenderer<CustomChestBlockEntity> {
 
 
     private static Material getMaterial(String path) {
-        return new Material(Sheets.CHEST_SHEET, new ResourceLocation(MODID,"entity/chest/"+ path));
+        return new Material(Sheets.CHEST_SHEET, ResourceLocation.fromNamespaceAndPath(MODID,"entity/chest/"+ path));
     }
 
     private static Material getChestMaterial(String path,String type) {
-        return new Material(Sheets.CHEST_SHEET, new ResourceLocation(MODID,"entity/chest/chest_" + type + "/" + path));
+        return new Material(Sheets.CHEST_SHEET, ResourceLocation.fromNamespaceAndPath(MODID,"entity/chest/chest_" + type + "/" + path));
     }
     private static Material getTrappedMaterial(String path,String type) {
-        return new Material(Sheets.CHEST_SHEET, new ResourceLocation(MODID,"entity/chest/chest_trapped_" + type + "/" + path));
+        return new Material(Sheets.CHEST_SHEET, ResourceLocation.fromNamespaceAndPath(MODID,"entity/chest/chest_trapped_" + type + "/" + path));
     }
 
     private Material getChestMaterial(CustomChestBlockEntity tile, ChestType type) {
@@ -93,10 +95,10 @@ public class CustomChestRenderer extends ChestRenderer<CustomChestBlockEntity> {
         } else if (christmas) {
             return Sheets.chooseMaterial(tile, type, true);
         } else if (tile instanceof CustomTrappedChestBlockEntity) {
-            ResourceLocation id = NotEnoughChests.TRAPPED_CHESTS_TO_WOOD.get( ForgeRegistries.BLOCKS.getKey(tile.getBlockState().getBlock()));
+            ResourceLocation id = NotEnoughChests.TRAPPED_CHESTS_TO_WOOD.get( BuiltInRegistries.BLOCK.getKey(tile.getBlockState().getBlock()));
             return chooseMaterial(type, left_trapped.get(id), right_trapped.get(id), single_trapped.get(id));
         } else {
-            ResourceLocation id = NotEnoughChests.CHESTS_TO_WOOD.get( ForgeRegistries.BLOCKS.getKey(tile.getBlockState().getBlock()));
+            ResourceLocation id = NotEnoughChests.CHESTS_TO_WOOD.get( BuiltInRegistries.BLOCK.getKey(tile.getBlockState().getBlock()));
             return chooseMaterial(type, left.get(id), right.get(id), single.get(id));
         }
     }

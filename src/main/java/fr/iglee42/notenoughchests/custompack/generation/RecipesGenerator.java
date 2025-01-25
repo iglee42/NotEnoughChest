@@ -11,7 +11,7 @@ import java.io.FileWriter;
 public class RecipesGenerator {
     public static void generate() {
         NotEnoughChests.WOOD_TYPES.stream().forEach(rs->{
-            if (!rs.equals(new ResourceLocation("oak")))chest(rs.getNamespace(),rs.getPath());
+            if (!rs.equals(ResourceLocation.withDefaultNamespace("oak")))chest(rs.getNamespace(),rs.getPath());
             trappedChest(rs.getNamespace(),rs.getPath());
         });
     }
@@ -30,7 +30,7 @@ public class RecipesGenerator {
                     "    }\n" +
                     "  ],\n" +
                     "  \"result\": {\n" +
-                    "    \"item\": \"nec:"+ModAbbreviation.getModAbbreviation(modid)+name+"_trapped_chest\"\n" +
+                    "    \"id\": \"nec:"+ModAbbreviation.getModAbbreviation(modid)+name+"_trapped_chest\"\n" +
                     "  }\n" +
                     "}");
 
@@ -54,11 +54,11 @@ public class RecipesGenerator {
                     "  ],\n" +
                     "  \"key\": {\n" +
                     "    \"#\": {\n" +
-                    "      \"item\": \""+modid+":"+getPrefix(new ResourceLocation(modid,name))+name+getSuffix(new ResourceLocation(modid,name))+"\"\n" +
+                    "      \"item\": \""+modid+":"+getPrefix(ResourceLocation.fromNamespaceAndPath(modid,name))+name+getSuffix(ResourceLocation.fromNamespaceAndPath(modid,name))+"\"\n" +
                     "    }\n" +
                     "  },\n" +
                     "  \"result\": {\n" +
-                    "    \"item\": \"nec:"+ModAbbreviation.getModAbbreviation(modid)+name+"_chest\"\n" +
+                    "    \"id\": \"nec:"+ModAbbreviation.getModAbbreviation(modid)+name+"_chest\"\n" +
                     "  }\n" +
                     "}");
             writer.close();
