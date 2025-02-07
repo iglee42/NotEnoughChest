@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import fr.iglee42.notenoughchests.NotEnoughChests;
 import fr.iglee42.notenoughchests.custompack.PathConstant;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.fml.loading.FMLPaths;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.*;
 import java.net.HttpURLConnection;
