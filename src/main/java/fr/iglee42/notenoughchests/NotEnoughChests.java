@@ -92,11 +92,7 @@ public class NotEnoughChests {
 
         modEventBus.addListener(this::commonSetup);
 
-        try {
-            ModAbbreviation.init();
-        } catch (IOException ignored) {
-            NotEnoughChests.LOGGER.error("API isn't online, some chests may not work correctly !");
-        }
+        ModAbbreviation.init();
 
 
         try {
