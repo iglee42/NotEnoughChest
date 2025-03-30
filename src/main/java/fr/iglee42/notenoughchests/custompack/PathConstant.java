@@ -12,6 +12,11 @@ import java.nio.file.Path;
 
 public class PathConstant {
 
+    public static Path TEMPLATES_PATH;
+    public static Path CHEST_RECIPE_PATH;
+    public static Path TRAPPED_CHEST_RECIPE_PATH;
+    public static Path LOG_CHEST_RECIPE_PATH;
+
     public static Path ROOT_PATH;
     public static Path ASSETS_PATH;
     public static Path DATAS_PATH;
@@ -48,6 +53,12 @@ public class PathConstant {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        TEMPLATES_PATH = FMLPaths.CONFIGDIR.get().resolve("nec/templates");
+        TEMPLATES_PATH.toFile().mkdirs();
+        CHEST_RECIPE_PATH = TEMPLATES_PATH.resolve("chest_recipe.json");
+        TRAPPED_CHEST_RECIPE_PATH = TEMPLATES_PATH.resolve("trapped_chest_recipe.json");
+        LOG_CHEST_RECIPE_PATH = TEMPLATES_PATH.resolve("log_chest_recipe.json");
+
         ROOT_PATH = FMLPaths.CONFIGDIR.get().resolve("nec/pack");
         ROOT_PATH.toFile().mkdirs();
         ASSETS_PATH = ROOT_PATH.resolve("assets/nec");
