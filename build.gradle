@@ -115,7 +115,7 @@ repositories {
 
     maven {
         name "igleeRepoReleases"
-        url "https://iglee.fr:8081/releases"
+        url "https://maven.iglee.fr/releases"
     }
 
 
