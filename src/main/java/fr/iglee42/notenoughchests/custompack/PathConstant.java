@@ -2,7 +2,7 @@ package fr.iglee42.notenoughchests.custompack;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import fr.iglee42.notenoughchests.NotEnoughChests;
+import fr.iglee42.notenoughchests.utils.RequestsUtils;
 import net.neoforged.fml.loading.FMLPaths;
 
 import java.io.File;
@@ -49,7 +49,7 @@ public class PathConstant {
 
     public static void init() {
         try {
-            if (NotEnoughChests.textureServerOnline)deleteDirectory(FMLPaths.CONFIGDIR.get().resolve("nec/pack"));
+            if (RequestsUtils.API_ONLINE)deleteDirectory(FMLPaths.CONFIGDIR.get().resolve("nec/pack"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -11,8 +11,8 @@ import fr.iglee42.notenoughchests.custompack.NECPackFinder;
 import fr.iglee42.notenoughchests.custompack.PackType;
 import fr.iglee42.notenoughchests.custompack.PathConstant;
 import fr.iglee42.notenoughchests.custompack.generation.*;
-import fr.iglee42.notenoughchests.utils.DownloadAndZipUtils;
 import fr.iglee42.notenoughchests.utils.ModAbbreviation;
+import fr.iglee42.notenoughchests.utils.RequestsUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -29,8 +29,6 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.ModLoader;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
@@ -43,11 +41,9 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,8 +78,7 @@ public class NotEnoughChests {
 
 
     private static boolean hasGenerated;
-    public static boolean textureServerOnline = true;
-    private static JsonObject chestTextureIds;
+    public static JsonObject chestTextureIds;
 
     public NotEnoughChests(IEventBus modEventBus) {
         hasGenerated = false;
@@ -93,37 +88,11 @@ public class NotEnoughChests {
         modEventBus.addListener(this::addCreative);
 
 
+        RequestsUtils.ping();
+
         ModAbbreviation.init();
 
-
-        try {
-            if (FMLEnvironment.dist == Dist.CLIENT) {
-                URL url = new URL("https://iglee.fr:3000/chests");
-                HttpURLConnection con = (HttpURLConnection)url.openConnection();
-                con.setRequestMethod("GET");
-                con.setConnectTimeout(5000);
-                con.setReadTimeout(1000);
-                con.setInstanceFollowRedirects(false);
-                int status = con.getResponseCode();
-                if (status == 200) {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    StringBuilder json = new StringBuilder();
-                    String inputLine;
-                    while ((inputLine = in.readLine()) != null) {
-                        try {
-                            json.append(inputLine);
-                        } catch (Exception ignored) {}
-                    }
-                    chestTextureIds = new Gson().fromJson(json.toString(),JsonObject.class);
-                    in.close();
-                } else {
-                    textureServerOnline = false;
-                }
-                con.disconnect();
-            }
-        } catch (Exception ignored) {
-            textureServerOnline = false;
-        }
+        askChestIds();
 
         WOOD_TYPES = new ArrayList<>();
         PLANK_TYPES = new ArrayList<>();
@@ -175,6 +144,32 @@ public class NotEnoughChests {
         } catch (Exception ignored) {
         }
 
+    }
+
+    private void askChestIds() {
+        try {
+            if (FMLEnvironment.dist == Dist.CLIENT && RequestsUtils.API_ONLINE) {
+                HttpURLConnection con = RequestsUtils.sendRequest("chests","GET",0);
+                int status = con.getResponseCode();
+                if (status == 200) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    StringBuilder json = new StringBuilder();
+                    String inputLine;
+                    while ((inputLine = in.readLine()) != null) {
+                        try {
+                            json.append(inputLine);
+                        } catch (Exception ignored) {}
+                    }
+                    chestTextureIds = new Gson().fromJson(json.toString(),JsonObject.class);
+                    in.close();
+                } else {
+                    LOGGER.error("Error while asking chests ids, server sent code: {}", status);
+                }
+                con.disconnect();
+            }
+        } catch (Exception ignored) {
+            LOGGER.error("Error while asking chests ids");
+        }
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -234,38 +229,7 @@ public class NotEnoughChests {
     public static void generateData() {
         if (!hasGenerated) {
             if (FMLEnvironment.dist == Dist.CLIENT) {
-                if (textureServerOnline) {
-                    List<Integer> idsToDownload = new ArrayList<>();
-                    WOOD_TYPES.forEach(wt -> {
-                        String abbrev = ModAbbreviation.getModAbbreviation(wt.getNamespace());
-                        Map<String, Integer> ids = new HashMap<>();
-                        if (chestTextureIds != null)chestTextureIds.asMap().forEach((id, el) -> ids.put(id, el.getAsInt()));
-                        int id;
-                        if (abbrev.isEmpty()) {
-                            id = ids.getOrDefault(wt.getPath(), -1);
-                        } else {
-                            id = ids.getOrDefault(abbrev.replace("_", "") + "/" + wt.getPath(), -1);
-                        }
-                        idsToDownload.add(id);
-                    });
-                    LOGGER.info("{} chests' textures to download !", idsToDownload.size());
-                    StringBuilder array = new StringBuilder("[");
-                    for (int i = 0; i < idsToDownload.size(); i++) {
-                        array.append(idsToDownload.get(i));
-                        if (i < idsToDownload.size() - 1) array.append(",");
-                    }
-                    array.append("]");
-                    try {
-                        URL url = new URL("https://iglee.fr:3000/chestTextures?chests=" + array);
-                        File zipFile = new File(PathConstant.ROOT_PATH.toString(), "chests.zip");
-                        DownloadAndZipUtils.downloadUsingStream(url, zipFile);
-                        DownloadAndZipUtils.unzip(zipFile, PathConstant.CHEST_TEXTURES_PATH.toFile());
-                        LOGGER.info("{} chests' textures downloaded !", idsToDownload.size());
-
-                    } catch (Exception ex) {
-                        LOGGER.error("Failed to download chests' textures !");
-                    }
-                }
+                RequestsUtils.downloadTextures();
                 ModelsGenerator.generate();
                 BlockStatesGenerator.generate();
                 LangsGenerator.generate();
