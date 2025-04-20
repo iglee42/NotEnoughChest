@@ -89,26 +89,6 @@ public class RecipesGenerator {
                 recipe = gson.toJson(object);
             }
             recipe(modid,name,recipe,"_chest.json");
-        } catch (Exception exception) {
-            NotEnoughChests.LOGGER.error("An error was detected when recipes generating", exception);
-            FileWriter writer = new FileWriter(new File(PathConstant.RECIPES_PATH.toFile(), ModAbbreviation.getModAbbreviation(modid)+name+"_chest.json"));
-            writer.write("{\n" +
-                    "  \"type\": \"minecraft:crafting_shaped\",\n" +
-                    "  \"pattern\": [\n" +
-                    "    \"###\",\n" +
-                    "    \"# #\",\n" +
-                    "    \"###\"\n" +
-                    "  ],\n" +
-                    "  \"key\": {\n" +
-                    "    \"#\": {\n" +
-                    "      \"item\": \""+modid+":"+getPrefix(ResourceLocation.fromNamespaceAndPath(modid,name))+name+getSuffix(ResourceLocation.fromNamespaceAndPath(modid,name))+"\"\n" +
-                    "    }\n" +
-                    "  },\n" +
-                    "  \"result\": {\n" +
-                    "    \"id\": \"nec:"+ModAbbreviation.getModAbbreviation(modid)+name+"_chest\"\n" +
-                    "  }\n" +
-                    "}");
-            writer.close();
         } catch (Exception exception){
             NotEnoughChests.LOGGER.error("An error was detected when recipes generating",exception);
         }
@@ -161,7 +141,7 @@ public class RecipesGenerator {
                 .replace("${abbreviation}",abbreviation)
                 .replace("${modid}",modid)
                 .replace("${wood}",wood)
-                .replace("${planks}", modid + ":" + getPrefix(new ResourceLocation(modid, wood)) + wood + getSuffix(new ResourceLocation(modid, wood)));
+                .replace("${planks}", modid + ":" + getPrefix(ResourceLocation.fromNamespaceAndPath(modid, wood)) + wood + getSuffix(ResourceLocation.fromNamespaceAndPath(modid, wood)));
     }
 
     private static String getPrefix(ResourceLocation rs) {
